@@ -44,3 +44,6 @@ urlpatterns = [
     # Documentación con Redoc
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ] +  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+handler404 = "middleware.handler.custom_page_not_found_view"

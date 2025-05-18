@@ -30,7 +30,7 @@ class HeadCampanasFilter(FilterSet):
 class View_model_descripcion(viewsets.ModelViewSet):
     queryset = Campañas_desc.objects.all()
     serializer_class = Campanas_Serializer
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     @action(detail=False, methods=['get'])
     def resumencampanas(self, request):
@@ -103,7 +103,7 @@ class View_model_head(viewsets.ModelViewSet):
     queryset = Head_campañas.objects.all()
     serializer_class = Head_serializer
 
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     
 
