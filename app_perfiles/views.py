@@ -36,10 +36,12 @@ class HeaderModelos(viewsets.ModelViewSet):
         
                 
         lista_detalles_fron = SaldoAcumulado.objects.select_related('model_id').all()
+
+
         
         if id_model:
             lista_detalles_fron = lista_detalles_fron.filter(model_id=id_model)
-            
+
 
         
         lista_front = [{'id':i.model_id.id,
@@ -54,8 +56,13 @@ class HeaderModelos(viewsets.ModelViewSet):
                         "codigo_wallet":i.model_id.codigo_wallet,
                         "saldo":i.saldo_disponible,
                         "qr": request.build_absolute_uri(i.model_id.qr.url) if i.model_id.qr else None,  # Genera la URL completa
-                        "pautas_asignadas":{"nombres": [pautas.nombre_pauta for pautas in i.model_id.pautas_asignadas.all()]
-}
+                        "foto_perfil":request.build_absolute_uri(i.model_id.foto_perfil.url) if i.model_id.foto_perfil else None,
+                        "pautas_asignadas":{"nombres": [pautas.nombre_pauta for pautas in i.model_id.pautas_asignadas.all()]},
+                        "transaciones":[ {
+                    "fecha": t.fecha,
+                    "tipo_de_movimiento": t.tipo_de_movimiento,
+                    "monto": t.monto
+                } for t in i.Transacciones.all()]       
                         } for i in lista_detalles_fron]
         
         

@@ -22,6 +22,7 @@ class Header_Modelos(models.Model):
     edad = models.IntegerField(null=True)
     qr = models.ImageField(upload_to='qrcodes/', blank=True, null=True)
     codigo_wallet = models.CharField(max_length=50, blank=True, null=True)
+    foto_perfil = models.ImageField(upload_to='perfiles/', blank=True, null=True)
     tipo_de_cuenta  = models.ForeignKey(TipoDeCuenta, on_delete=models.CASCADE)
     
 

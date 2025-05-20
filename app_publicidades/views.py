@@ -11,13 +11,37 @@ class HeaderViewSet(viewsets.ModelViewSet):
     queryset = Publicidad.objects.all()
     serializer_class = HeaderSerializer
 
+    
+    @action(detail=False, methods=['get'])
+    def header(self,request):
+        activas = Publicidad.objects.filter(activa=True).values().count()
+        
+        pendientes = Publicidad.objects.filter(activa=False).values().count()
+
+        return Response({"Activas":activas,
+                         "Pendientes":pendientes})
+    
+    
+
+
 class DescripcionesViewSet(viewsets.ModelViewSet):
     queryset = Items_presupuesto_publicidades.objects.all()
     serializer_class = DescripcionesSerializer
     
     @action(detail=False, methods=['get'])
     def datos(self,request):
+        id_publicidad = request.query_params.get('id')
+        
         queryset  = Items_presupuesto_publicidades.objects.all()
-        serializer_class = SerializerItems(queryset, many=True)
+        
+        
+        if id_publicidad:
+            queryset = queryset.filter(id_publicidad = id_publicidad)
 
-        return Response(serializer_class.data)
+        serializer  = SerializerItems(queryset, many=True)
+        
+        return Response(serializer.data)
+
+
+    
+    

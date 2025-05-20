@@ -19,7 +19,7 @@ class PautasSerializer(serializers.ModelSerializer):
         instance = super().update(instance, validated_data)
         
         # Solo acreditamos si el estado cambió de PENDIENTE a otro
-        if estado_anterior == 'PENDIENTE' and estado_nuevo != 'PENDIENTE':
+        if estado_nuevo == 'PROCESADA' and estado_anterior in ['PENDIENTE', 'ACTIVA']:
             modelo = instance.modelo
             wallet = modelo.Wallets  # related_name='Wallets'
 
