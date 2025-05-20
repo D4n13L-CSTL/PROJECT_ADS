@@ -103,8 +103,6 @@ class View_model_head(viewsets.ModelViewSet):
     queryset = Head_campañas.objects.all()
     serializer_class = Head_serializer
 
-    permission_classes = [IsAuthenticated]
-
     
 
 
