@@ -1,7 +1,7 @@
 from rest_framework.views import exception_handler
 from rest_framework.response import Response
 from rest_framework import status
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 
 def custom_exception_handler(exc, context):
@@ -17,13 +17,11 @@ def custom_exception_handler(exc, context):
                 "error": "No tienes permiso para acceder a este recurso."
             }
 
-        if response.status_code == 404:
-            response.data = {
-                "error": "Ruta no encontrada"
-            }
+
     return response
 
 
 
 def custom_page_not_found_view(request, exception):
-    return JsonResponse({"error": "Ruta no encontrada"}, status=404)
+    
+    return HttpResponse("Ruta no encontrada", status=404)
