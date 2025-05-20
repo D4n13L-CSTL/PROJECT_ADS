@@ -39,7 +39,6 @@ class ClerkAuthentication(BaseAuthentication):
                 }
             )
 
-<<<<<<< HEAD
             # Buscar o crear el usuario según el campo 'sub' del token
             User = get_user_model()
             user, created = User.objects.get_or_create(clerk_id=decoded["sub"])
@@ -51,22 +50,3 @@ class ClerkAuthentication(BaseAuthentication):
         except PyJWTError as e:
             print("🔥 Error al verificar token:", str(e))  # Debug detallado
             raise AuthenticationFailed(f"Token inválido: {str(e)}")
-=======
-        data = clerk_response.json()
-        print(f"✅ Respuesta de Clerk: {data}")
-        
-        # Datos básicos
-        email = data.get("email_address", "unknown@clerk.dev")
-        username = data.get("sub", "clerk_user")
-
-        # Obtiene un usuario real si ya existe o crea uno temporal
-        UserModel = get_user_model()
-        try:
-            user = UserModel.objects.get(username=username)
-        except UserModel.DoesNotExist:
-            user = AnonymousUser()
-
-        return (user, token)
-
-
->>>>>>> 52243ff727baa413be8cb7504bff5e889d16d07a
