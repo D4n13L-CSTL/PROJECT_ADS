@@ -11,6 +11,13 @@ CLERK_API_KEY = os.getenv("CLERK_API_KEY")
 from django.contrib.auth.models import AnonymousUser, User
 from django.contrib.auth import get_user_model
 
+from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth import get_user_model
+from rest_framework.authentication import BaseAuthentication
+from rest_framework.exceptions import AuthenticationFailed
+from django.conf import settings
+import requests
+
 class ClerkAuthentication(BaseAuthentication):
     def authenticate(self, request):
         print("🔐 ClerkAuthentication activa")
@@ -39,14 +46,17 @@ class ClerkAuthentication(BaseAuthentication):
         data = clerk_response.json()
         print(f"✅ Respuesta de Clerk: {data}")
         
-        # Usamos los datos del token para crear un usuario temporal
+        # Datos básicos
         email = data.get("email_address", "unknown@clerk.dev")
         username = data.get("sub", "clerk_user")
 
-        # Crea un usuario falso (no lo guarda en la BD)
+        # Obtiene un usuario real si ya existe o crea uno temporal
         UserModel = get_user_model()
-        user = UserModel(id=None, username=username, email=email)
-        user.is_authenticated = True  # le decimos que sí está autenticado
-        
+        try:
+            user = UserModel.objects.get(username=username)
+        except UserModel.DoesNotExist:
+            user = AnonymousUser()
+
         return (user, token)
+
 
