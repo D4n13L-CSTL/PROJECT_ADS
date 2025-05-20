@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'app_init',
     'app_dashboard',
-    'app_loggin',
     'app_campañas',
     'app_perfiles',
     'app_publicidades',
