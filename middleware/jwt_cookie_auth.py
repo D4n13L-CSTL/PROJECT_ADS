@@ -5,6 +5,15 @@ from django.conf import settings
 from jwt import PyJWTError, decode
 from jwt import PyJWKClient
 
+class ClerkUser:
+    def __init__(self, clerk_sub, payload):
+        self.clerk_sub = clerk_sub
+        self.clerk_payload = payload
+
+    @property
+    def is_authenticated(self):
+        return True
+
 class ClerkAuthentication(BaseAuthentication):
     def __init__(self):
         super().__init__()
@@ -39,13 +48,8 @@ class ClerkAuthentication(BaseAuthentication):
                 }
             )
 
-            # Crear un usuario temporal con el sub como username
-            user = AnonymousUser()
-            user.clerk_sub = decoded["sub"]
-            user.clerk_payload = decoded
-
+            user = ClerkUser(decoded["sub"], decoded)
             print(f"✅ Token válido para clerk_sub: {decoded['sub']}")
-
             return (user, token)
 
         except PyJWTError as e:
