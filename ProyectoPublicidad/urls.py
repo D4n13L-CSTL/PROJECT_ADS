@@ -33,7 +33,6 @@ urlpatterns = [
     path('publicidad/', include('app_publicidades.urls')),
     path('modelos/', include('app_perfiles.urls')),
     path('pautas/', include('app_pautasMaker.urls')),
-    path('', include('app_loggin.urls')),
     path('wallet/',include('app_wallet.urls')),
     
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

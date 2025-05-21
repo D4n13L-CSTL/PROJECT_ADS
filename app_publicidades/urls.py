@@ -3,7 +3,7 @@ from .views import  HeaderViewSet, DescripcionesViewSet
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register(r'crear', HeaderViewSet)
+router.register(r'create', HeaderViewSet)
 router.register(r'items', DescripcionesViewSet)
 
 urlpatterns = [
