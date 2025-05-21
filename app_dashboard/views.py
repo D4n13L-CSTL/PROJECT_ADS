@@ -51,7 +51,7 @@ def dashboard(request):
                                  "foto_perfil":i.nombre_pauta,
                                  "monto_pauta":i.monto_de_pauta,
                                  "estado_pauta":i.status_pauta,
-                                 "foto_perfil":request.build_absolute_uri(i.modelo.foto_perfil.url) if i.modelo.foto_perfil else None,
+                                 "foto_perfil":str(i.model_id.foto_perfil),
                                  }for i in modelos_prueba]
                
                
