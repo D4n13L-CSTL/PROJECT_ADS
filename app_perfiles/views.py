@@ -56,7 +56,7 @@ class HeaderModelos(viewsets.ModelViewSet):
                         "codigo_wallet":i.model_id.codigo_wallet,
                         "saldo":i.saldo_disponible,
                         "qr": request.build_absolute_uri(i.model_id.qr.url) if i.model_id.qr else None,  # Genera la URL completa
-                        "foto_perfil":request.build_absolute_uri(i.model_id.foto_perfil.url) if i.model_id.foto_perfil else None,
+                        "foto_perfil":str(i.model_id.foto_perfil),
                         "pautas_asignadas":{"nombres": [pautas.nombre_pauta for pautas in i.model_id.pautas_asignadas.all()]},
                         "transaciones":[ {
                     "fecha": t.fecha,
