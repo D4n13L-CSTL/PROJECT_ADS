@@ -17,14 +17,29 @@ from urllib.parse import urlparse
 import os
 load_dotenv()
 from decouple import config
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 
 CLERK_API_KEY = config("CLERK_SECRET_KEY")
 
 CLERK_DOMAIN = config("CLERK_DOMAIN")
-
+CLOUD_NAME = config("CLOUD_NAME")
+API_KEY = config("API_KEY")
+API_SECRET = config("API_SECRET")
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': CLOUD_NAME,
+    'API_KEY': API_KEY,
+    'API_SECRET': API_SECRET,
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -47,6 +62,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
     'corsheaders',
     'django_extensions',    
     'rest_framework',
